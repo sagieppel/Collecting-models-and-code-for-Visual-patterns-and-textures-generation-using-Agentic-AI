@@ -1,0 +1,8 @@
+Suggest @@@number_of_new@@@ procedural generation approaches for creating  textures.
+Each method should be able to generate an unlimited  number of different textures using a Python script.
+The methods should be as different from each other as possible and should encompass a wide range of domains as possible.
+You can use physics, geometry, topology, or any algorithmic mathematical approach, as long as long as it generate tileable seamless textures.
+Think out of the box in as many domains and methods as possible, make the suggestions different from each other (but remember this need to run on PC in few minutes), and covering as wide a range of fields as possible.
+(Think geometry, math, physics, architecture, fractals, biology, geology, chemistry, cellular automata,chaos,cities, economy, sociology, ecology,art, materials, or any other  original idea or combination of ideas that might come to mind. The method could contain random elements and, if possible, generate color textures.
+
+List your suggestions and generally explain each, try to think on things that can be later implemented as code (but dont add any code yet).

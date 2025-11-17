@@ -1,0 +1,10 @@
+Suggest @@@number_of_new@@@  models, methods, simulations and functions that generate visual patterns and textures.
+Each method should be able to generate an unlimited  number of different images of visual pattern and textures using a Python script.
+The methods should be as different from each other as possible and should encompass a wide range of domains and fields.
+You can use physics, geometry, topology, or any algorithmic mathematical, cellular automata, engineering, social methods and models or any field that come to mind.
+Think of as many domains and methods as possible, make the suggestions different from each other (but remember this need to run on PC in few minutes), and covering as wide a range of fields as possible.
+(Think geometry, math, physics, architecture, fractals, biology, geology, chemistry, cellular automata,chaos, fractals,cities, economy, sociology, ecology,art, materials, or any other  original idea that  come to mind. The method could contain random elements and, if possible, generate color images.
+Ideally try to think of  well known, classical or canonical models and methods (game of life, navier stock ,penrose tiling) and not invent completely new idea.
+Try to make the method model an actual system (even if just as simplistic toy model) and not just create pretty patterns remotely inspired by it.
+List your suggestions and generally explain each, try to think on things that can be later implemented as code (but dont add any code yet).
+
