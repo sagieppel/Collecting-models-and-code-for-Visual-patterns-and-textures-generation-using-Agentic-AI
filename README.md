@@ -16,7 +16,7 @@ More details on the method can be found in the document:
 
 ​The code relies on API for major AI LVLM suppliers (GPT, Gemini, Qwen, DeepSeek, Claude, Grok...). You need to have API keys (and purchase tokens) for at least one of those (GPT-5  is recommended).
 
-The code curent supports APIs from OpenAI, Together.AI (Qwen,DeepSeek), Grok,Gemini, and Claude. You can add other APIs to tools/ToolVisualQuestion.py.
+The code supports APIs from OpenAI, Together.AI (Qwen,DeepSeek), Grok,Gemini, and Claude. You can add other APIs to tools/ToolVisualQuestion.py.
 
 
 
