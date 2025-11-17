@@ -38,7 +38,7 @@ def check_and_install_dependencies(code,model="o4-mini",num_tries=3,messages=Non
 
 
     for i in range(num_tries):
-        results = VQ.get_reponse(messages=messages,model="o4-mini",as_json=True)
+        results = VQ.get_reponse(messages = messages, model = model, as_json = True)
         messages.append({"role": "system", "content": str(results)})
         print(messages[-1])
         # try:
