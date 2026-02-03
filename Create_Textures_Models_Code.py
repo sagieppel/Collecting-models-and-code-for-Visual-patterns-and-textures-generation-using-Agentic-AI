@@ -37,9 +37,9 @@ def generate_scitextures(dataset_dir, query_dir, number_of_new=10, number_of_cod
         dt=json_pkl.read_pkl(data_file)
         dt['qr']=qr
         data_file_loaded=True
-        #............Removing unused............................................................................
+        #............Removing unused models (models that were suggested but werent implemented)............................................................................
         to_remove=[]
-        if not 'benchmarks' in dt: dt['benchmarks'] = {}
+        if not 'benchmarks' in dt or dt['benchmarks'] is None: dt['benchmarks'] = {} # Dictionary were all generated models will be stored
         for bname in dt['benchmarks']:
             ent = dt['benchmarks'][bname]
             if 'full_overlap' in ent and ent['full_overlap'] == True and 'code' not in ent:
@@ -88,7 +88,7 @@ def generate_scitextures(dataset_dir, query_dir, number_of_new=10, number_of_cod
 
         bdesc = ent["description"]
 
-#---------------------if manual checked applied if entries failed manual inspection redo the code (manual inspection is seperate script)--------------------------------------------------------
+#---------------------if manual checked applied if entries failed manual inspection redo the code (manual inspection is seperate script that add tag based on human. If not inspection done  this part can be ignore)--------------------------------------------------------
         if "checked" in ent: # this mean this entery passed manual inspection
             if  ent['checked'] == 'pass': continue # if checked and passed continue
             if "code" in ent: # if the code failed manual inspection remove it
