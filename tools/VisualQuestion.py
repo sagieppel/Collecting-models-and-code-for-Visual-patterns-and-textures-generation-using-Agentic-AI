@@ -206,8 +206,9 @@ def get_response_image_txt_json_openrouter(
         "model": model,
         "messages": messages,
     }
-    # if as_json:
-    #     payload["response_format"] = {"type": "json_object"}
+    if as_json:
+        payload["response_format"] = {"type": "json_object"}
+        payload['messages'].append({"role": "user", "content": "Respond with raw JSON only. Do not use Markdown.Do not wrap the response in code fences. Output must be directly parsable by JSON.parse."})
 
     r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=timeout)
     r.raise_for_status()
