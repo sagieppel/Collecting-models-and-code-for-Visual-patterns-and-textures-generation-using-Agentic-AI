@@ -277,14 +277,12 @@ if __name__=="__main__":
         recheck_originality=False #True # double check the idea is in dataset also identify related ideas
         model = "google/gemini-3-flash-preview" #"z-ai/glm-4.7-flash"#"moonshotai/kimi-k2.5"#openai/gpt-5.2"#grok-4-fast-reasoning"#"Qwen/Qwen2.5-VL-72B-Instruct"#"claude-sonnet-4-5-20250929" #"grok-4-fast-reasoning"#"gemini-2.5-flash"#"Qwen/Qwen2.5-VL-72B-Instruct"#"gpt-5"
         for kk in range(1000):
-            number_of_new= 4 # Number of new ideas to suggest in each round (
- 
-        #    if kk==0: number_of_new = 0
-
-
-             
-            #try:
+            number_of_new= 4 # Number of new ideas to suggest in each round 
             generate_scitextures(dataset_dir=outputdir, query_dir=query_dir, number_of_new=number_of_new, number_of_code_fix_retry=number_of_code_fix_retry, recheck_originality=recheck_originality, model=model)
+ 
+            #if kk==0: number_of_new = 0 # finish implement old ideas before suggesting new 
+            #try:
+            #generate_scitextures(dataset_dir=outputdir, query_dir=query_dir, number_of_new=number_of_new, number_of_code_fix_retry=number_of_code_fix_retry, recheck_originality=recheck_originality, model=model)
             # except Exception as e:
             #     print("Error in main generate_scitextures sleeping 100 sec\n",e)
             #     import time
