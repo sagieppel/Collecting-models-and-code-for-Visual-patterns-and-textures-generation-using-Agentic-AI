@@ -37,12 +37,14 @@ def generate_scitextures(dataset_dir, query_dir, number_of_new=10, number_of_cod
         dt=json_pkl.read_pkl(data_file)
         dt['qr']=qr
         data_file_loaded=True
-        #............Removing unused models (models that were suggested but werent implemented)............................................................................
+        #............Removing unused............................................................................
         to_remove=[]
-        if not 'benchmarks' in dt or dt['benchmarks'] is None: dt['benchmarks'] = {} # Dictionary were all generated models will be stored
+        if not 'benchmarks' in dt or dt['benchmarks'] is None: dt['benchmarks'] = {}
         for bname in dt['benchmarks']:
             ent = dt['benchmarks'][bname]
             if 'full_overlap' in ent and ent['full_overlap'] == True and 'code' not in ent:
+                to_remove.append(bname)
+            if not isinstance(ent , dict) or 'benchmarks' not in dt:
                 to_remove.append(bname)
         for bname in to_remove:
                 print("Removing:",bname)
@@ -88,7 +90,7 @@ def generate_scitextures(dataset_dir, query_dir, number_of_new=10, number_of_cod
 
         bdesc = ent["description"]
 
-#---------------------if manual checked applied if entries failed manual inspection redo the code (manual inspection is seperate script that add tag based on human. If not inspection done  this part can be ignore)--------------------------------------------------------
+#---------------------if manual checked applied if entries failed manual inspection redo the code (manual inspection is seperate script)--------------------------------------------------------
         if "checked" in ent: # this mean this entery passed manual inspection
             if  ent['checked'] == 'pass': continue # if checked and passed continue
             if "code" in ent: # if the code failed manual inspection remove it
@@ -237,7 +239,7 @@ def generate_scitextures(dataset_dir, query_dir, number_of_new=10, number_of_cod
                 print(txt)
                 code_dic, dt = VQ.get_reponse(dt, text=verify_query, as_json=True, model=check_model) # Ask the checker LLM to identify and correct errors
     #            print(dt['benchmarks'][bname]['code']['discussion'])
-                if code_dic['corrections']=='yes':# and len(code_dic['code'])>0:
+                if 'corrections' in code_dic and code_dic['corrections']=='yes':# and len(code_dic['code'])>0:
                     print("\\n\n\n****************************************************************************\n\n\nCode correction found:",code_dic)
                     del dt['benchmarks'][bname]['code']
                     dt['benchmarks'][bname]['code'] = code_dic
@@ -264,21 +266,31 @@ def generate_scitextures(dataset_dir, query_dir, number_of_new=10, number_of_cod
 ################################################################################################################################################################
 
 if __name__=="__main__":
-        query_dir = "queries_prompts//queries_textures_pattern_generation_conseravative_1//" # Folder where prompts/queries are save
-        outputdir = "Scitextures//" # output folder where the generated dataset will be saved,
+        query_dir = "queries_prompts//queries_textures_generation_classic_texture_VERY_creative//" # Folder where prompts/queries are save
+        outputdir = "Scitextures_gemini3flash//" # output folder where the generated dataset will be saved,
         ## its important that this will be subfolder of the code folder and given
         # in relative path  as files in this folder will be imported to the code
 
 
         data_file = outputdir + "//data.pkl" # Data file contain all data in the dataset
         number_of_code_fix_retry = 1  # 3 # number of times to try to fix code before accepting the final results (note that over analyzing the code often make the results wors
-        recheck_originality=True #True # double check the idea is in dataset also identify related ideas
-        model = "gpt-5"#grok-4-fast-reasoning"#"Qwen/Qwen2.5-VL-72B-Instruct"#"claude-sonnet-4-5-20250929" #"grok-4-fast-reasoning"#"gemini-2.5-flash"#"Qwen/Qwen2.5-VL-72B-Instruct"#"gpt-5"
-        for kk in range(100):
+        recheck_originality=False #True # double check the idea is in dataset also identify related ideas
+        model = "google/gemini-3-flash-preview" #"z-ai/glm-4.7-flash"#"moonshotai/kimi-k2.5"#openai/gpt-5.2"#grok-4-fast-reasoning"#"Qwen/Qwen2.5-VL-72B-Instruct"#"claude-sonnet-4-5-20250929" #"grok-4-fast-reasoning"#"gemini-2.5-flash"#"Qwen/Qwen2.5-VL-72B-Instruct"#"gpt-5"
+        for kk in range(1000):
             # if kk==0:
             #     number_of_new= 0 # allow the method to finish existing un implemented ideas
             # else:
             #     number_of_new= 4 # Number of new ideas to suggest in each round (
-            number_of_new = 3  # Number of new ideas to suggest in each round (
-            generate_scitextures(dataset_dir=outputdir, query_dir=query_dir, number_of_new=number_of_new, number_of_code_fix_retry=number_of_code_fix_retry, recheck_originality=recheck_originality, model=model)
+            number_of_new = 5
+            if kk==0: number_of_new = 0
 
+
+            # Number of new ideas to suggest in each round (
+            #try:
+            generate_scitextures(dataset_dir=outputdir, query_dir=query_dir, number_of_new=number_of_new, number_of_code_fix_retry=number_of_code_fix_retry, recheck_originality=recheck_originality, model=model)
+            # except Exception as e:
+            #     print("Error in main generate_scitextures sleeping 100 sec\n",e)
+            #     import time
+            #     time.sleep(100)
+            #     continue
+            #
