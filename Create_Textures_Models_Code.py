@@ -44,7 +44,7 @@ def generate_scitextures(dataset_dir, query_dir, number_of_new=10, number_of_cod
             ent = dt['benchmarks'][bname]
             if 'full_overlap' in ent and ent['full_overlap'] == True and 'code' not in ent:
                 to_remove.append(bname)
-            if not isinstance(ent , dict) or 'benchmarks' not in dt:
+            if not isinstance(ent , dict) or 'description' not in dt:
                 to_remove.append(bname)
         for bname in to_remove:
                 print("Removing:",bname)
