@@ -103,3 +103,4 @@ Classify model error level 'Accurate', 'Minor errors', 'Major errors','Undecided
 
  ​![](/Sample1.jpg)
 .
+# For  Generating  models/code from input image [see this repo](https://github.com/sagieppel/Im2Sim-From-image-to-coding-the-simulation-of-the-physical-system-in-the-image-using-VLM/tree/main)
