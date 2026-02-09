@@ -8,6 +8,9 @@ More details on the method can be found in the document:
 
 [SciTextures: Collecting and Connecting Visual Patterns, Models, and Code Across Science and Art](https://arxiv.org/pdf/2511.01817) 
 
+For  Generating  models/code from reference image [see this repo](https://github.com/sagieppel/Im2Sim-From-image-to-coding-the-simulation-of-the-physical-system-in-the-image-using-VLM/tree/main)
+
+
 ​![](/Sample0.jpg)
 
 # How to use:
@@ -103,4 +106,3 @@ Classify model error level 'Accurate', 'Minor errors', 'Major errors','Undecided
 
  ​![](/Sample1.jpg)
 .
-# For  Generating  models/code from input image [see this repo](https://github.com/sagieppel/Im2Sim-From-image-to-coding-the-simulation-of-the-physical-system-in-the-image-using-VLM/tree/main)
