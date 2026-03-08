@@ -277,7 +277,7 @@ def generate_scitextures(dataset_dir, query_dir, number_of_new=10, number_of_cod
 
 if __name__=="__main__":
         query_dir = "queries_prompts//queries_textures_generation_classic_texture_creative//" # Folder where prompts/queries are save
-        outputdir = "/home/deadcrow/Documents/scitexture_output/" # output folder where the generated dataset will be saved,
+        outputdir = "scitexture_output/" # output folder where the generated dataset will be saved,
 
 
 
@@ -285,11 +285,11 @@ if __name__=="__main__":
         number_of_code_fix_retry = 1  # 3 # number of times to try to fix code before accepting the final results (note that over analyzing the code often make the results wors
         recheck_originality=False #True # double check the idea is in dataset also identify related ideas
         model = "google/gemini-3.1-flash-lite-preview"#"google/gemini-3-flash-preview" # model for writing code (and defult for everthing else) "z-ai/glm-4.7-flash"#"moonshotai/kimi-k2.5"#openai/gpt-5.2"#grok-4-fast-reasoning"#"Qwen/Qwen2.5-VL-72B-Instruct"#"claude-sonnet-4-5-20250929" #"grok-4-fast-reasoning"#"gemini-2.5-flash"#"Qwen/Qwen2.5-VL-72B-Instruct"#"gpt-5"
-  #      idea_model = "moonshotai/kimi-k2.5" # model for suggesting idea (if blank use  model)
+        idea_model = "moonshotai/kimi-k2.5" # model for suggesting idea (if blank use  model)
       #  check_model = model for suggesting code if blank use main model
         for kk in range(1000):
-            number_of_new= 2 # Number of new ideas to suggest in each round
-            generate_scitextures(dataset_dir=outputdir, query_dir=query_dir, number_of_new=number_of_new, number_of_code_fix_retry=number_of_code_fix_retry, recheck_originality=recheck_originality, model=model)
+            number_of_new= 5 # Number of new ideas to suggest in each round
+            generate_scitextures(dataset_dir=outputdir, query_dir=query_dir, number_of_new=number_of_new, number_of_code_fix_retry=number_of_code_fix_retry, recheck_originality=recheck_originality, model=model, idea_model = idea_model)
  
             #if kk==0: number_of_new = 0 # finish implement old ideas before suggesting new 
             #try:
