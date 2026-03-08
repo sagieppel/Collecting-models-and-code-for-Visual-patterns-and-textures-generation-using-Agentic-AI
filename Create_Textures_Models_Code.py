@@ -160,14 +160,24 @@ def generate_scitextures(dataset_dir, query_dir, number_of_new=10, number_of_cod
             dt['benchmarks'][bname]['dir']=benchdir
             #-----Validation code run the generator and test results----------------------------
             testing_code_str = (
-                        "\nimport importlib\n" +
-                        "\nimport " + MF.path_to_import(code_path) + " as generate\n" +
+                        #"\nimport importlib\n" +
+                        #"\nimport " + MF.path_to_import(code_path) + " as generate\n" +
                         #code_path.replace("//",".").replace(".py","").replace("/",".").replace("..",".") + " as generate\n"+
+
+                        "\nimport importlib, os, sys"
+                        "\nsubdir = '" + benchdir + "'"
+                        "\nsys.path.insert(0, os.path.abspath(subdir))"
+                        "\nimport generate  as generate"
+                     #   "\nimport " + module_name + " as generate"                                                                          
                         "\nimportlib.reload(generate)"
                         "\noutdir = '" + bench_sample_dir + "'" +
-                        dt['qr']["run_line"]
+                        "\ngenerate.generate_texture(outdir,num_samples=10)"
+                        #dt['qr']["run_line"]
                         #"\ngenerate.generate_benchmark (texture_dir,shape_dir,outdir, num_samples=30)\n"
             )
+
+
+
             for kk in range(number_of_code_fix_retry+100):
                 if not os.path.exists(dataset_dir): os.mkdir(benchdir)
                 code = dt['benchmarks'][bname]['code']['code']
@@ -266,18 +276,19 @@ def generate_scitextures(dataset_dir, query_dir, number_of_new=10, number_of_cod
 ################################################################################################################################################################
 
 if __name__=="__main__":
-        query_dir = "queries_prompts//queries_textures_generation_classic_texture_VERY_creative//" # Folder where prompts/queries are save
-        outputdir = "Scitextures_gemini3flash//" # output folder where the generated dataset will be saved,
-        ## its important that this will be subfolder of the code folder and given
-        # in relative path  as files in this folder will be imported to the code
+        query_dir = "queries_prompts//queries_textures_generation_classic_texture_creative//" # Folder where prompts/queries are save
+        outputdir = "/home/deadcrow/Documents/scitexture_output/" # output folder where the generated dataset will be saved,
+
 
 
         data_file = outputdir + "//data.pkl" # Data file contain all data in the dataset
         number_of_code_fix_retry = 1  # 3 # number of times to try to fix code before accepting the final results (note that over analyzing the code often make the results wors
         recheck_originality=False #True # double check the idea is in dataset also identify related ideas
-        model = "google/gemini-3-flash-preview" #"z-ai/glm-4.7-flash"#"moonshotai/kimi-k2.5"#openai/gpt-5.2"#grok-4-fast-reasoning"#"Qwen/Qwen2.5-VL-72B-Instruct"#"claude-sonnet-4-5-20250929" #"grok-4-fast-reasoning"#"gemini-2.5-flash"#"Qwen/Qwen2.5-VL-72B-Instruct"#"gpt-5"
+        model = "google/gemini-3.1-flash-lite-preview"#"google/gemini-3-flash-preview" # model for writing code (and defult for everthing else) "z-ai/glm-4.7-flash"#"moonshotai/kimi-k2.5"#openai/gpt-5.2"#grok-4-fast-reasoning"#"Qwen/Qwen2.5-VL-72B-Instruct"#"claude-sonnet-4-5-20250929" #"grok-4-fast-reasoning"#"gemini-2.5-flash"#"Qwen/Qwen2.5-VL-72B-Instruct"#"gpt-5"
+  #      idea_model = "moonshotai/kimi-k2.5" # model for suggesting idea (if blank use  model)
+      #  check_model = model for suggesting code if blank use main model
         for kk in range(1000):
-            number_of_new= 4 # Number of new ideas to suggest in each round 
+            number_of_new= 2 # Number of new ideas to suggest in each round
             generate_scitextures(dataset_dir=outputdir, query_dir=query_dir, number_of_new=number_of_new, number_of_code_fix_retry=number_of_code_fix_retry, recheck_originality=recheck_originality, model=model)
  
             #if kk==0: number_of_new = 0 # finish implement old ideas before suggesting new 
