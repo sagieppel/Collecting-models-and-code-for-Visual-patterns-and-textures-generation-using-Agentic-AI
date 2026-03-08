@@ -19,40 +19,83 @@ from datetime import datetime
 
 # Execute code given as scripts
 ###################################################################################################
-def run_code(code,functions_and_var={}):
-    # Prepare StringIO buffers
+# def run_code(code,functions_and_var={}): #old no name space
+#     # Prepare StringIO buffers
+#     out_buf = io.StringIO()
+#     err_buf = io.StringIO()
+#     successed=True
+#     # Swap in our buffers for stdout & stderr
+#     with redirect_stdout(out_buf), redirect_stderr(err_buf):
+#         try:
+#            # exec(textwrap.dedent(code),  {"seq":seq})  # run the code in a fresh namespace
+#             exec(textwrap.dedent(code))
+#             exec_error = None
+#         except Exception:
+#             successed=False
+#             # Capture the full traceback
+#             exec_error = traceback.format_exc()
+#
+#     # Restore stdout/stderr automatically on exiting the with‑block
+#
+#     # Retrieve what was printed
+#     captured_stdout = out_buf.getvalue()
+#     captured_stderr = err_buf.getvalue()
+#
+#     print("=== Captured stdout ===")
+#     print(captured_stdout)
+#     if not successed:
+#         print("=== Captured stderr (low‑level prints) ===")
+#         print(captured_stderr)
+#         if exec_error:
+#             print("=== Caught Exception Traceback ===")
+#             print(exec_error)
+#     if exec_error:
+#          return successed, captured_stdout, exec_error
+#     else:
+#         return successed, captured_stdout, captured_stderr
+############################################################################################################################
+import io
+import textwrap
+import traceback
+from contextlib import redirect_stdout, redirect_stderr
+
+
+def run_code(code, functions_and_var=None):
+    if functions_and_var is None:
+        functions_and_var = {}
+
+    # 1. Create a FRESH namespace for this specific run
+    # We include __builtins__ so the code has access to print, range, etc.
+    env = {"__builtins__": __builtins__}
+
+    # 2. Inject your specific functions or variables into this fresh env
+    env.update(functions_and_var)
+
     out_buf = io.StringIO()
     err_buf = io.StringIO()
-    successed=True
-    # Swap in our buffers for stdout & stderr
+    successed = True
+    exec_error = None
+
     with redirect_stdout(out_buf), redirect_stderr(err_buf):
         try:
-           # exec(textwrap.dedent(code),  {"seq":seq})  # run the code in a fresh namespace
-            exec(textwrap.dedent(code))
-            exec_error = None
+            # 3. Pass 'env' as both globals and locals to isolate it
+            exec(textwrap.dedent(code), env)
         except Exception:
-            successed=False
-            # Capture the full traceback
+            successed = False
             exec_error = traceback.format_exc()
 
-    # Restore stdout/stderr automatically on exiting the with‑block
-
-    # Retrieve what was printed
     captured_stdout = out_buf.getvalue()
     captured_stderr = err_buf.getvalue()
 
-    print("=== Captured stdout ===")
-    print(captured_stdout)
+    # Optional: Debugging prints
     if not successed:
-        print("=== Captured stderr (low‑level prints) ===")
+        print("=== Captured stderr ===")
         print(captured_stderr)
         if exec_error:
             print("=== Caught Exception Traceback ===")
             print(exec_error)
-    if exec_error:
-         return successed, captured_stdout, exec_error
-    else:
-        return successed, captured_stdout, captured_stderr
+
+    return successed, captured_stdout, exec_error if exec_error else captured_stderr
 #################################################################################################################################
 def run_code_timeout(code, functions_and_var=None, time_out=5):
     """

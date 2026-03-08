@@ -72,30 +72,35 @@ def get_response_image_txt_json(
 ) -> str:
     # Send querty
     openai_models=["gpt-5-mini","gpt-5", "gpt-oss-120b", "gpt-oss-20b","o4-mini","gpt-5.2-2025-12-11"]
-    together_models=["google/gemma-3n-E4B-it","meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8","meta-llama/Llama-4-Scout-17B-16E-Instruct","Qwen/Qwen2.5-VL-72B-Instruct","deepseek-ai/DeepSeek-R1-0528"]
+    together_models=["zai-org/GLM-5","google/gemma-3n-E4B-it","meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8","meta-llama/Llama-4-Scout-17B-16E-Instruct","Qwen/Qwen2.5-VL-72B-Instruct","deepseek-ai/DeepSeek-R1-0528"]
     gemini_models=["gemini-3-pro-preview","gemini-2.5-pro","gemini-2.5-flash"]
     grok_models = ["grok-4-fast-reasoning", "grok-4-fast-non-reasoning","grok-4","grok-2-vision","grok-2-vision-1212"]
     claude_models = ["claude-3-5-sonnet-latest","claude-sonnet-4-5-20250929","claude-sonnet-4-5-latest"]
-    open_router=["moonshotai/kimi-k2.5","openai/gpt-5.2","qwen/qwen3-vl-32b-instruct","openai/gpt-5","z-ai/glm-4.6v","qwen/qwen3-vl-32b-instruct","qwen/qwen3-vl-8b-instruct"]
+    open_router=["google/gemini-3.1-flash-lite-preview","google/gemini-3.1-pro-preview","qwen/qwen3.5-plus-02-15","z-ai/glm-5","qwen/qwen3.5-plus-02-15","minimax/minimax-m2","deepseek/deepseek-v3.2","z-ai/glm-4.7","google/gemini-3-flash-preview", "z-ai/glm-4.7-flash","moonshotai/kimi-k2.5","openai/gpt-5.2","qwen/qwen3-vl-32b-instruct","openai/gpt-5","z-ai/glm-4.6v","qwen/qwen3-vl-32b-instruct","qwen/qwen3-vl-8b-instruct"]
     l = len(messages)
     for i in range(4):
         messages = messages[:l]
         try:
                 if model in open_router:
                     return get_response_image_txt_json_openrouter(text, img_path, model, as_json, messages)
-                if model in openai_models:
+                elif model in openai_models:
                     return get_response_image_txt_json_openai(text,img_path,model,as_json,messages)
-                if model in together_models:
+                elif model in together_models:
                     return get_response_image_txt_json_together(text, img_path, model, as_json,messages)
-                if model in gemini_models:
+                elif model in gemini_models:
                     return get_response_image_txt_json_gemini(text, img_path, model, as_json,messages)
-                if model in grok_models:
+                elif model in grok_models:
                     return get_response_image_txt_json_grok(text, img_path, model, as_json,messages)
-                if model in claude_models:
+                elif model in claude_models:
                     return get_response_image_txt_json_claude(text, img_path, model, as_json,messages)
-                if model == "human":
+                elif model == "human":
                     return get_response_image_txt_json_human(text, img_path)
-                break
+                else:
+                    txt = ("cant find model "+ model+ "server please update in visual question get_response_image_txt_json")
+                    print(txt)
+                    raise txt
+                    exit(txt)
+
         except Exception as e:
              print("Error getting answer:\n",e,"\nModel:",model)
              print("sleeping 6 seconds")

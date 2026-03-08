@@ -48,7 +48,7 @@ def check_and_install_dependencies(code,model="o4-mini",num_tries=3,messages=Non
         #     print(messages[-1])
         #     continue
         if i==0:
-            if results['packages'] == None or results['packages'] == [] or results['packages'] == "none" or len(
+            if 'packages' not in results or results['packages'] == None or results['packages'] == [] or results['packages'] == "none" or len(
                 results['installation_code']) == 0: return True, messages, ""
             code_to_run = results['installation_code']
         else:
@@ -74,11 +74,11 @@ def check_and_install_dependencies(code,model="o4-mini",num_tries=3,messages=Non
 # run code inspect results and debug
 
 ########################################################################################################################################################
-def run_debug_code(messages, code,code_dir,functions_and_var,codefilename,testing_code,task_description,num_iter=5, clean_dir=True,time_out=0, rechek_code=True,model="gpt-5-mini"):
+def run_debug_code(messages, code,code_dir,functions_and_var,codefilename,testing_code,task_description,num_iter=4, clean_dir=True,time_out=0, rechek_code=False,model="gpt-5-mini"):
 #---------------------Install dependencies------------------------------------------------------
     code_verified = False # Does the code run smoothly
 
-    inst_success,inst_logs,installation_code=check_and_install_dependencies(code, model=model)
+   # inst_success,inst_logs,installation_code=check_and_install_dependencies(code, model=model)
 
     #------------------------Write and save code to file-----------------------------------------------------------
     for ii in range(num_iter):
