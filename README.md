@@ -36,9 +36,7 @@ At:
 
 **model** = select model name(for example gpt-5) 
 
-**Outputdir** = The path to the folder where the code and images will be saved. THIS has to be inside the code folder, and the path MUST be given as a relative path to the code folder (this folder will contain some of the generated scripts, which will be imported into the code in real time and run).
-
-
+**Outputdir** = The path to the folder where the code and images will be saved.  
 
 
 **query_dir** = (optional) folder with queries/prompt used to guide the model generation. You are supplied with 4 such folders, some prioritize original creative methods for texture generation, and some canonical models/textures queries. All folders that start with “queries_” contain a different set of queries that can be used for query_dir. 
