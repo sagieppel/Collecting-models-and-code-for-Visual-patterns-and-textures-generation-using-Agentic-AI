@@ -22,7 +22,7 @@ def sanitize_code(code_str: str) -> str:
 # Check code and install whatever dependencies needed to  run the code
 
 ###############################################################################################################
-def check_and_install_dependencies(code,model="o4-mini",num_tries=3,messages=None):
+def check_and_install_dependencies(code,model="",num_tries=3,messages=None):
     if messages is None:
         prompt = ("Read the following code and see which packages/imports/dependencies does it use.\n"
                 "Write  python script that check if all packages/imports/dependencies are available and install them if necessary\n"
@@ -74,11 +74,11 @@ def check_and_install_dependencies(code,model="o4-mini",num_tries=3,messages=Non
 # run code inspect results and debug
 
 ########################################################################################################################################################
-def run_debug_code(messages, code,code_dir,functions_and_var,codefilename,testing_code,task_description,num_iter=4, clean_dir=True,time_out=0, rechek_code=False,model="gpt-5-mini"):
+def run_debug_code(messages, code,code_dir,functions_and_var,codefilename,testing_code,task_description,num_iter=4, clean_dir=True,time_out=0, rechek_code=False,model="", pre_install_dependency=False):
 #---------------------Install dependencies------------------------------------------------------
     code_verified = False # Does the code run smoothly
-
-   # inst_success,inst_logs,installation_code=check_and_install_dependencies(code, model=model)
+    if pre_install_dependency:
+                inst_success,inst_logs,installation_code=check_and_install_dependencies(code, model=model)
 
     #------------------------Write and save code to file-----------------------------------------------------------
     for ii in range(num_iter):
@@ -140,7 +140,7 @@ def run_debug_code(messages, code,code_dir,functions_and_var,codefilename,testin
             if 'fixable' in results and results['fixable']=="yes": # if the code is fixable fix it
                  code=sanitize_code(results['code'])
                  if 'dependencies' in results and results['dependencies']=="yes":
-                     inst_success, inst_logs, installation_code = check_and_install_dependencies(code)
+                     inst_success, inst_logs, installation_code = check_and_install_dependencies(code,model=model)
                      messages+=inst_logs
                  continue
             else:

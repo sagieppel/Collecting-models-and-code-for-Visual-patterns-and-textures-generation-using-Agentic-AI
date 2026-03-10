@@ -76,7 +76,7 @@ def get_response_image_txt_json(
     gemini_models=["gemini-3-pro-preview","gemini-2.5-pro","gemini-2.5-flash"]
     grok_models = ["grok-4-fast-reasoning", "grok-4-fast-non-reasoning","grok-4","grok-2-vision","grok-2-vision-1212"]
     claude_models = ["claude-3-5-sonnet-latest","claude-sonnet-4-5-20250929","claude-sonnet-4-5-latest"]
-    open_router=["google/gemini-3.1-flash-lite-preview","google/gemini-3.1-pro-preview","qwen/qwen3.5-plus-02-15","z-ai/glm-5","qwen/qwen3.5-plus-02-15","minimax/minimax-m2","deepseek/deepseek-v3.2","z-ai/glm-4.7","google/gemini-3-flash-preview", "z-ai/glm-4.7-flash","moonshotai/kimi-k2.5","openai/gpt-5.2","qwen/qwen3-vl-32b-instruct","openai/gpt-5","z-ai/glm-4.6v","qwen/qwen3-vl-32b-instruct","qwen/qwen3-vl-8b-instruct"]
+    open_router=["minimax/minimax-m2.5","google/gemini-3.1-flash-lite-preview","google/gemini-3.1-pro-preview","qwen/qwen3.5-plus-02-15","z-ai/glm-5","qwen/qwen3.5-plus-02-15","minimax/minimax-m2","deepseek/deepseek-v3.2","z-ai/glm-4.7","google/gemini-3-flash-preview", "z-ai/glm-4.7-flash","moonshotai/kimi-k2.5","openai/gpt-5.2","qwen/qwen3-vl-32b-instruct","openai/gpt-5","z-ai/glm-4.6v","qwen/qwen3-vl-32b-instruct","qwen/qwen3-vl-8b-instruct"]
     l = len(messages)
     for i in range(4):
         messages = messages[:l]
@@ -100,7 +100,7 @@ def get_response_image_txt_json(
                     print(txt)
                     raise txt
                     exit(txt)
-
+                break
         except Exception as e:
              print("Error getting answer:\n",e,"\nModel:",model)
              print("sleeping 6 seconds")
